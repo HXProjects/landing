@@ -2,7 +2,7 @@ name: Deploy app
 
 on:
   push:
-    branches: [ 01_githubpages_preparation ]
+    branches: [ master ]
 
 permissions:
   contents: write
