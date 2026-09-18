@@ -1,0 +1,28 @@
+name: Deploy app 
+
+on:
+  push:
+    branches: [ 01_githubpages_preparation ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Publish Blazor WASM
+      run: dotnet publish -c Release -o output
+
+    - name: Add .nojekyll
+      run: touch output/wwwroot/.nojekyll
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: output/wwwroot
+        branch: gh-pages
